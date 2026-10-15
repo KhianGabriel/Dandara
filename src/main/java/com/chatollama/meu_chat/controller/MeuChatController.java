@@ -1,27 +1,26 @@
 package com.chatollama.meu_chat.controller;
 
-import org.antlr.v4.runtime.misc.NotNull;
-import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.chatollama.meu_chat.dto.MeuChatRequest;
+import com.chatollama.meu_chat.dto.MeuChatResponse;
+import com.chatollama.meu_chat.service.MeuChatService;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class MeuChatController {
 
-    private final ChatClient chatClient;
+    private final MeuChatService chatService;
 
-    public MeuChatController(@NotNull ChatClient.Builder chatClient) {
-        this.chatClient = chatClient.build();
+    public MeuChatController(MeuChatService chatService) {
+        this.chatService = chatService;
     }
 
     @GetMapping("/ai")
-    String generation(String prompt) {
-        return this.chatClient.prompt()
-                .user(prompt)
-                .call()
-                .content();
+    public String perguntar(@RequestParam String prompt) {
+        return chatService.perguntar(prompt);
     }
 
-
-
+    @PostMapping("/api/chat")
+    public MeuChatResponse chat(@RequestBody MeuChatRequest chatRequest) {
+        return new MeuChatResponse(chatService.perguntar(chatRequest.message()));
+    }
 }
