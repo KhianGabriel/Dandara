@@ -1,0 +1,277 @@
+/* ===== Cores e medidas (paleta inspirada no Spring) ===== */
+:root {
+  --verde: #6DB33F;
+  --verde-escuro: #3C7A26;
+  --verde-claro: #EDF4E6;
+  --fundo: #F7F8F5;
+  --superficie: #FDFDFB;
+  --borda: #D9E4D1;
+  --texto: #141414;
+  --texto-suave: #3D3D3D;
+  --erro-fundo: #FDECEA;
+  --erro-borda: #E3A49B;
+  --largura: 820px;
+  --raio: 20px;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  color: var(--texto);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--fundo);
+}
+
+/* ===== Topo ===== */
+.topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 24px;
+  background: var(--superficie);
+  border-bottom: 4px solid var(--verde);
+}
+
+.marca { display: flex; align-items: center; gap: 12px; }
+
+.logo {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--verde);
+  overflow: hidden;
+  flex: none;
+  border: 2px solid var(--verde);
+}
+
+/* Foto da Dandara: preenche o quadrado sem distorcer */
+.logo img,
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.topo h1 { margin: 0; font-size: 20px; }
+.subtitulo { margin: 0; font-size: 14px; color: var(--texto-suave); }
+
+.botao-secundario {
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--texto);
+  background: var(--superficie);
+  border: 2px solid var(--borda);
+  border-radius: 999px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+.botao-secundario:hover { border-color: var(--verde); }
+
+/* ===== Área das mensagens ===== */
+#mensagens {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  /* centraliza uma coluna de até 820px, como no ChatGPT */
+  padding: 24px max(16px, calc((100% - var(--largura)) / 2));
+}
+
+.boas-vindas { margin: auto 0; text-align: center; }
+.foto-boas-vindas {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: var(--verde);
+  border: 4px solid var(--verde);
+  margin-bottom: 16px;
+}
+.boas-vindas h2 { font-size: 28px; margin: 0 0 8px; }
+.boas-vindas p { margin: 0 0 24px; color: var(--texto-suave); }
+
+.sugestoes {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.sugestao {
+  font: inherit;
+  font-size: 15px;
+  text-align: left;
+  color: var(--texto);
+  background: var(--superficie);
+  border: 2px solid var(--borda);
+  border-radius: 16px;
+  padding: 14px 16px;
+  cursor: pointer;
+}
+.sugestao:hover { border-color: var(--verde); background: var(--verde-claro); }
+
+/* ===== Balões ===== */
+.mensagem { display: flex; gap: 12px; max-width: 100%; }
+
+.mensagem.usuario { align-self: flex-end; }
+.mensagem.bot { align-self: flex-start; }
+
+.balao {
+  padding: 12px 18px;
+  border-radius: var(--raio);
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+
+.mensagem.usuario .balao {
+  max-width: 600px;
+  white-space: pre-wrap;
+  background: var(--verde-claro);
+  border: 1px solid var(--verde);
+  border-bottom-right-radius: 4px;
+}
+
+.mensagem.bot .balao {
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-bottom-left-radius: 4px;
+}
+
+.mensagem.erro .balao {
+  background: var(--erro-fundo);
+  border-color: var(--erro-borda);
+}
+
+.avatar {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--verde);
+  overflow: hidden;
+}
+
+/* Texto em Markdown dentro da resposta */
+.balao > :first-child { margin-top: 0; }
+.balao > :last-child { margin-bottom: 0; }
+.balao p { margin: 0 0 10px; }
+.balao ul, .balao ol { margin: 0 0 10px; padding-left: 22px; }
+.balao h1, .balao h2, .balao h3 { font-size: 17px; margin: 14px 0 6px; }
+.balao code { background: var(--verde-claro); padding: 1px 5px; border-radius: 6px; }
+.balao pre { background: var(--verde-claro); padding: 12px; border-radius: 10px; overflow-x: auto; }
+.balao pre code { padding: 0; }
+.balao table { border-collapse: collapse; margin: 0 0 10px; }
+.balao th, .balao td { border: 1px solid var(--borda); padding: 6px 10px; text-align: left; }
+.balao th { background: var(--verde-claro); }
+
+/* "Digitando…" */
+.pontos { display: inline-flex; gap: 5px; padding: 6px 0; }
+.pontos span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--verde-escuro);
+  animation: pular 1.2s infinite ease-in-out;
+}
+.pontos span:nth-child(2) { animation-delay: 0.15s; }
+.pontos span:nth-child(3) { animation-delay: 0.3s; }
+@keyframes pular {
+  0%, 80%, 100% { opacity: 0.3; transform: translateY(0); }
+  40% { opacity: 1; transform: translateY(-4px); }
+}
+
+/* ===== Caixa de envio ===== */
+.rodape {
+  padding: 12px max(16px, calc((100% - var(--largura)) / 2)) 16px;
+  background: var(--fundo);
+}
+
+.caixa {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  background: var(--superficie);
+  border: 2px solid var(--borda);
+  border-radius: 24px;
+  padding: 8px;
+}
+.caixa:focus-within { border-color: var(--verde); }
+
+#pergunta {
+  flex: 1;
+  min-width: 0;
+  resize: none;
+  border: none;
+  outline: none;
+  background: transparent;
+  font: inherit;
+  font-size: 16px;
+  color: var(--texto);
+  line-height: 1.5;
+  padding: 8px 4px;
+  max-height: 200px;
+}
+
+.icone {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--texto-suave);
+}
+.icone:disabled { opacity: 0.45; cursor: not-allowed; }
+.icone svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.enviar {
+  flex: none;
+  font: inherit;
+  font-weight: 700;
+  color: var(--texto);
+  background: var(--verde);
+  border: none;
+  border-radius: 999px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+.enviar:hover { background: #5FA334; }
+.enviar:disabled { opacity: 0.5; cursor: wait; }
+
+.aviso {
+  margin: 8px 0 0;
+  font-size: 12px;
+  text-align: center;
+  color: var(--texto-suave);
+}
+
+/* ===== Celular ===== */
+@media (max-width: 600px) {
+  .topo { padding: 10px 16px; }
+  .subtitulo { display: none; }
+  .boas-vindas h2 { font-size: 22px; }
+  .foto-boas-vindas { width: 88px; height: 88px; }
+  .sugestoes { grid-template-columns: 1fr; }
+  .icone { display: none; }
+}
