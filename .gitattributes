@@ -1,4 +1,5 @@
 /mvnw text eol=lf
 *.cmd text eol=crlf
 *.css linguist-vendored
+*.js linguist-vendored
 *.java linguist-language=Java
